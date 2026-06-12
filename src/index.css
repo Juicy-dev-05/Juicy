@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-brand-blue: #0004C8;
+  --color-brand-blue-hover: #00039A;
+  --color-brand-blue-glow: rgba(0, 4, 200, 0.15);
+}
+
+/* Base custom resets for raw, ultra-clean editorial feel */
+html, body {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: #0004C8;
+  color: #FFFFFF;
+}
+
+.circle-loader {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-top-color: #0004C8;
+  animation: circle-loader-spin 0.7s linear infinite;
+}
+
+@keyframes circle-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hide scrollbar for a clean editorial presentation, but keep functional */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A1A1A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #252525;
+}
+
+.legal-modal-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.legal-modal-root,
+.legal-modal-panel {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.legal-modal-scroll::-webkit-scrollbar,
+.legal-modal-root::-webkit-scrollbar,
+.legal-modal-panel::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+html.modal-scroll-lock,
+body.modal-scroll-lock {
+  overflow: hidden !important;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+html.modal-scroll-lock::-webkit-scrollbar,
+body.modal-scroll-lock::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Custom premium step button effects requested by user */
+.button-premium-send {
+  --primary: #0004C8;
+  --success: #10b981;
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --border-color: #1a1a1a;
+  --radius: 99px; 
+  
+  cursor: pointer;
+  border-radius: var(--radius);
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  
+  height: 48px;
+  min-width: 180px;
+  padding: 0 32px;  
+  
+  transition: 
+    min-width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.4s ease, 
+    border-color 0.4s ease, 
+    color 0.4s ease, 
+    transform 0.2s ease, 
+    box-shadow 0.3s ease;
+
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Hover default */
+.button-premium-send:hover:not(.is-sent):not(.is-loading) {
+  border-color: var(--primary);
+  color: #ffffff;
+  background-color: var(--primary);
+  box-shadow: 0 4px 15px rgba(0, 4, 200, 0.4);
+}
+.button-premium-send:active:not(.is-sent) { transform: scale(0.96); }
+
+/* States styling */
+.premium-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  white-space: nowrap;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-state p { display: flex; margin: 0; }
+.premium-state .icon { display: flex; }
+
+.state--default { opacity: 1; transform: translateY(0); }
+.state--loading { opacity: 0; transform: translateY(15px); pointer-events: none; }
+.state--sent { opacity: 0; transform: translateY(15px); pointer-events: none; }
+
+/* Fixed angle on hover */
+.button-premium-send:hover:not(.is-sent):not(.is-loading) .icon svg { 
+  transform: rotate(15deg) translate(2px, -1px); 
+}
+.button-premium-send .icon svg {
+  transition: transform 0.2s ease;
+}
+
+/* Loading status */
+.button-premium-send.is-loading {
+  min-width: 48px; 
+  padding: 0;
+  background-color: #111111;
+  border-color: #222222;
+  color: #0004C8;
+  cursor: wait;
+}
+.button-premium-send.is-loading .state--default { opacity: 0; transform: translateY(-15px); }
+.button-premium-send.is-loading .state--loading { opacity: 1; transform: translateY(0); }
+
+.spinner-rotate { animation: spin-rotate 0.8s linear infinite; }
+.opacity-25 { opacity: 0.25; }
+@keyframes spin-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Sent status */
+.button-premium-send.is-sent {
+  min-width: 180px;
+  padding: 0 32px;
+  background-color: #0d2a1d;
+  border-color: var(--success);
+  color: var(--success);
+  cursor: default;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+}
+.button-premium-send.is-sent .state--default { opacity: 0; transform: translateY(-15px); }
+.button-premium-send.is-sent .state--loading { opacity: 0; transform: translateY(-15px); }
+.button-premium-send.is-sent .state--sent { opacity: 1; transform: translateY(0); }
+
+/* Premium pills button effect requested by user */
+.button-pill {
+  --primary-color: #0004C8;      /* Juicy Brand Blue */
+  --text-initial: #FFFFFF;       /* Pure White initial */
+  --border-initial: #1A1A1A;     /* Dark minimalist border */
+  --bg-initial: #000000;         /* Pure Black */
+  --radius: 99px;
+
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  height: 44px;
+  min-width: 152px;
+  padding: 0 24px;
+  
+  border-radius: var(--radius);
+  background-color: var(--bg-initial);
+  border: 1px solid var(--border-initial);
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+.button-pill::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.button-text {
+  position: relative;
+  z-index: 2;
+  color: var(--text-initial);
+  display: inline-flex;
+  align-items: center;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.button-pill:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 14px rgba(0, 4, 200, 0.35);
+}
+
+.button-pill:hover::before {
+  transform: translateX(0);
+}
+
+.button-pill:hover .button-text {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+.button-pill:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 6px rgba(0, 4, 200, 0.2);
+}
+
+.not-found-arcade::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.arcade-home-button {
+  border: 3px solid #000;
+  box-shadow:
+    0 5px 0 #000,
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 0 28px rgba(0, 4, 200, 0.35);
+}
+
+.arcade-home-button:focus-visible {
+  outline: 3px solid var(--pixel-yellow);
+  outline-offset: 5px;
+}
+
+.not-found-star {
+  display: inline-block;
+  transform-origin: 50% 58%;
+  animation: not-found-star-spin 5s linear infinite;
+}
+
+@keyframes not-found-star-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

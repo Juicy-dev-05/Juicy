@@ -1,0 +1,6 @@
+{
+  "name": "Juicy Comunidade",
+  "description": "Central de Suporte elegante, minimalista e premium para a JUICY COMUNIDADE — uma extensão natural do seu Discord.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
